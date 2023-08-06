@@ -1,4 +1,4 @@
-# Mina zkApp: Mtp
+# Mina zkApp: Learning1
 
 This template uses TypeScript.
 
