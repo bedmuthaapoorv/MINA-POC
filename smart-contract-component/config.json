@@ -16,6 +16,14 @@
       "feepayerAlias": "apoorv",
       "fee": "0.1",
       "smartContract": "Add"
+    },
+    "testnet3": {
+      "url": "https://proxy.berkeley.minaexplorer.com/graphql",
+      "keyPath": "keys/testnet3.json",
+      "feepayerKeyPath": "C:\\Users\\ADMIN/.cache/zkapp-cli/keys/apoorv.json",
+      "feepayerAlias": "apoorv",
+      "fee": "0.1",
+      "smartContract": "Add"
     }
   }
 }
