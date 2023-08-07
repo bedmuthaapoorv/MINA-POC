@@ -6,7 +6,7 @@ import { Field } from "snarkyjs";
 const network=Mina.Network("https://proxy.berkeley.minaexplorer.com/graphql");
 Mina.setActiveInstance(network);
 // public ket of testnet i.e. account on which the smart contract is hosted
-const appKey=PublicKey.fromBase58("B62qqSNSHiji6b3FoheH3ehV5knMdWRZEFvrcv5WDX2AZCJjpGs5Rkx");
+const appKey=PublicKey.fromBase58("B62qjqVd41M2ph7oiES68UbNctiVm64gTK4HQie3S5VFAn4hUQKEHJg");
 
 // A zkApp, or zero-knowledge application, is a type of application that runs on the Mina blockchain.
 // Add here is the smart contract which accepts the public key of smart contract account as parameter
