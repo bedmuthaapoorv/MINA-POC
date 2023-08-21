@@ -2,6 +2,10 @@ import { Mina, PrivateKey, PublicKey, fetchAccount } from "snarkyjs";
 import {Add} from "./Add.js";
 import { Field } from "snarkyjs";
 import generateRandomNumber from "./generate.js";
+import updateMapping from "./updateMapping.js";
+import { getNextUUID } from "./updateMapping.js";
+
+console.log("initializing...");
 // set the active network to be used
 const network=Mina.Network("https://proxy.berkeley.minaexplorer.com/graphql");
 Mina.setActiveInstance(network);
@@ -42,7 +46,7 @@ await Add.compile();
 let token=await generateRandomNumber();
 // transaction is created for updating the certificate with actual credentials
 const tx= await Mina.transaction({sender: user2publicKey, fee: 0.1e9},()=>{
-   zkApp.update(Field(1), Field(token));
+   zkApp.update(Field(getNextUUID()), Field(token));
 });
 
 // // The zk.prove function only checks that the computation that was performed on the local machine is correct.
@@ -60,5 +64,7 @@ const sentTx=await tx.sign([user2privateKey, appPrivateKey]).send();
 
 console.log("https://berkeley.minaexplorer.com/transaction/"+sentTx.hash());
 
-
+console.log("updating LRA mapping...");
+// after successfull registration, update mapping
+updateMapping(user2publicKey.toBase58(), appKey.toBase58());
 
