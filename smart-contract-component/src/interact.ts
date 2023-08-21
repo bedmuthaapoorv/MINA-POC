@@ -1,12 +1,17 @@
 import { Mina, PrivateKey, PublicKey, fetchAccount } from "snarkyjs";
 import {Add} from "./Add.js";
 import { Field } from "snarkyjs";
-
+import generateRandomNumber from "./generate.js";
 // set the active network to be used
 const network=Mina.Network("https://proxy.berkeley.minaexplorer.com/graphql");
 Mina.setActiveInstance(network);
 // public ket of testnet i.e. account on which the smart contract is hosted
-const appKey=PublicKey.fromBase58("B62qqFoduSvQeMK5EdR3qezKWR2SMQ2C2DxK9wSVzdLe4fkwCCcJ47U");
+const appPrivateKey=PrivateKey.fromBase58("EKFHWjLs6fJ5hZPxiZBE7syr4XUL4CR7cYsMnorFDGXWZ7UKxE7h");
+const appKey=PublicKey.fromBase58("B62qoU3sGZayG5Xgh2zr3iXrkjgj7zcu3FS3pfM7E6A6tUed2283c7w");
+
+// private and public keys of LRA / apoorv
+const lraPrivateKey=PrivateKey.fromBase58("EKF9GgrYH6qpxspwAE9vbq2RriMDHS4c3jvGqoitd6r9ko24Cx8M")
+const lraPublicKey=PublicKey.fromBase58("B62qj2gEtKpRJuf8H1vSes1cAK4ZTWm9ZzPtCryXTrhsrqYDdb6idbK")
 
 // A zkApp, or zero-knowledge application, is a type of application that runs on the Mina blockchain.
 // Add here is the smart contract which accepts the public key of smart contract account as parameter
@@ -20,21 +25,25 @@ const zkApp=new Add(appKey);
 // The fetchAccount function fetches the state of the smart contract from the blockchain 
 // and updates the state of the smart contract in the local environment.
 await fetchAccount({publicKey: appKey});
-let resp=zkApp.device.get();
-console.log(resp.UUID.toString());
+let resp=zkApp.UUID.get();
+// console.log(resp.toString());
 
-// // second users cred
-// const user2privateKey=PrivateKey.fromBase58("EKEPq8s8smnFkAhtoXETkDdb3m4jhugqzx82eYo5RNcJ3fiLryPF");
-// const user2publicKey=PublicKey.fromBase58("B62qp4eRL3DABErEKrNt4wWWx8G17TuG1Q941qKsvMQVfXpA5fJQB4C");
+// we deploy a smart contract which is essentially our certificate
+// once deployed LRA will update the smart contract with actual details of the device
 
-// // compiles the smart contract code into a form that can be run on Mina runtime
-// console.log("compiling...");
-// await Add.compile();
+// second users cred / device's public key
+const user2privateKey=PrivateKey.fromBase58("EKEPq8s8smnFkAhtoXETkDdb3m4jhugqzx82eYo5RNcJ3fiLryPF");
+const user2publicKey=PublicKey.fromBase58("B62qp4eRL3DABErEKrNt4wWWx8G17TuG1Q941qKsvMQVfXpA5fJQB4C");
 
-// // transaction is created
-// const tx= await Mina.transaction({sender: user2publicKey, fee: 0.1e9},()=>{
-//   zkApp.update();
-// });
+// compiles the smart contract code into a form that can be run on Mina runtime
+console.log("compiling...");
+await Add.compile();
+
+let token=await generateRandomNumber();
+// transaction is created for updating the certificate with actual credentials
+const tx= await Mina.transaction({sender: user2publicKey, fee: 0.1e9},()=>{
+   zkApp.update(Field(1), Field(token));
+});
 
 // // The zk.prove function only checks that the computation that was performed on the local machine is correct.
 // // The zk.prove function in Mina is used to generate a zero-knowledge proof.
@@ -43,12 +52,13 @@ console.log(resp.UUID.toString());
 // // the smart contract code is run locally before proving. 
 // // This is because the prover needs to know the output of the computation in order to generate the proof.
 
-// console.log("proving...");
-// await tx.prove();
+console.log("proving...");
+await tx.prove();
 
-// const sentTx=await tx.sign([user2privateKey]).send();
+// every transaction needs to be signed by private keys else it will fail the verification stage
+const sentTx=await tx.sign([user2privateKey, appPrivateKey]).send();
 
-// console.log("https://berkeley.minaexplorer.com/transaction/"+sentTx.hash());
+console.log("https://berkeley.minaexplorer.com/transaction/"+sentTx.hash());
 
 
 

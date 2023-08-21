@@ -1,11 +1,5 @@
 import { Field, SmartContract, state, State, method} from 'snarkyjs';
 import { Struct } from 'snarkyjs';
-class Device extends Struct({
-  UUID: Field,
-  publicKey: Field
-}){
-
-}
 
 /**
  * Basic Example
@@ -22,22 +16,20 @@ class Device extends Struct({
  */
 export class Add extends SmartContract {
   // this is how you define a field in a smart contract
-  @state(Field) num = State<Field>();
-  @state(Device) device=State<Device>();
+  @state(Field) UUID = State<Field>();
+  @state(Field) devicePublicKey = State<Field>();
   // this is the constructor where the fields are initialized
   init() {
     super.init();
-    this.num.set(Field(0));
-    this.device.set({
-      UUID: Field(1),
-      publicKey: Field(2)
-    })
+    this.UUID.set(Field(-1));
+    this.devicePublicKey.set(Field(-1));
   }
 
   // this method is responsible for updating the fields in a SC
-  @method update() { 
-    const currentState = this.num.getAndAssertEquals();
-    const newState = currentState.add(1);
-    this.num.set(newState);
+  @method update(deviceUUID: Field, pubKey: Field) { 
+    // const currentState = this.num.getAndAssertEquals();
+    // const newState = currentState.add(1);
+    this.UUID.set(deviceUUID);
+    this.devicePublicKey.set(pubKey);
   }
 }

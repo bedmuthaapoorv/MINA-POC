@@ -24,6 +24,22 @@
       "feepayerAlias": "apoorv",
       "fee": "0.1",
       "smartContract": "Add"
+    },
+    "testnet4": {
+      "url": "https://proxy.berkeley.minaexplorer.com/graphql",
+      "keyPath": "keys/testnet4.json",
+      "feepayerKeyPath": "C:\\Users\\ADMIN/.cache/zkapp-cli/keys/apoorv.json",
+      "feepayerAlias": "apoorv",
+      "fee": "0.1",
+      "smartContract": "Add"
+    },
+    "testnet5": {
+      "url": "https://proxy.berkeley.minaexplorer.com/graphql",
+      "keyPath": "keys/testnet5.json",
+      "feepayerKeyPath": "C:\\Users\\ADMIN/.cache/zkapp-cli/keys/apoorv.json",
+      "feepayerAlias": "apoorv",
+      "fee": "0.1",
+      "smartContract": "Add"
     }
   }
 }
