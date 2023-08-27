@@ -3,7 +3,7 @@ import * as fs from 'fs';
 function updateMapping(user2publicKey: String, appKey: String){
     let obj={
         "publicKey": user2publicKey,
-        "UUID": 1,
+        "UUID": getNextUUID(),
         "appPublicKey": appKey
     }
 

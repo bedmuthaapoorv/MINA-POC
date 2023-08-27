@@ -9,7 +9,7 @@ console.log("initializing...");
 // set the active network to be used
 const network=Mina.Network("https://proxy.berkeley.minaexplorer.com/graphql");
 Mina.setActiveInstance(network);
-// public ket of testnet i.e. account on which the smart contract is hosted
+// public key of testnet i.e. account on which the smart contract is hosted
 const appPrivateKey=PrivateKey.fromBase58("EKFHWjLs6fJ5hZPxiZBE7syr4XUL4CR7cYsMnorFDGXWZ7UKxE7h");
 const appKey=PublicKey.fromBase58("B62qoU3sGZayG5Xgh2zr3iXrkjgj7zcu3FS3pfM7E6A6tUed2283c7w");
 
