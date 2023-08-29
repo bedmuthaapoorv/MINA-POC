@@ -4,6 +4,7 @@ import { storeCert, isRegistered } from "./sendCredentials.js";
 import { Mina, fetchAccount } from "snarkyjs";
 import {Add} from "./Add.js";
 import { Field } from "snarkyjs";
+import * as fs from "fs"
 
 const network=Mina.Network("https://proxy.berkeley.minaexplorer.com/graphql");
 Mina.setActiveInstance(network);
@@ -21,9 +22,12 @@ if(!isRegistered()){
   const lraPublicKey=PublicKey.fromBase58("B62qj2gEtKpRJuf8H1vSes1cAK4ZTWm9ZzPtCryXTrhsrqYDdb6idbK")
 
   // console.log(userPublicKey.toBase58());
+
+  // method: 0 -> register
+  // method: 1 -> authenticate
   let data={
     "publicKey": userPublicKey.toBase58(),
-    "method":"register",
+    "method":0,
     "zkAppPublicKey": zkAppPublicKey.toBase58()
   }
   // send details to LRA for registration
@@ -71,6 +75,19 @@ if(!isRegistered()){
   console.log("authenticating begins");
   console.log("sending self signed certificate to verifier");
   // <-- sign the certificate -->
-  
+  const jsonString = fs.readFileSync('./src/Certificate.json', 'utf-8');
+  const cert=JSON.parse(jsonString);
+  let data={
+    "cert": cert,
+    "method":"1",
+  }
+  // send cert to LRA
+  let authenticationResponse=await sendCreds(data);
+  // console.log(authenticationResponse);
+  if(authenticationResponse=="true"){
+    console.log("authentication successfull");
+  }else{
+    console.log("authentication unsuccessfull");
+  }
 
 }

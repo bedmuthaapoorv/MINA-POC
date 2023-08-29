@@ -1,9 +1,10 @@
 import * as fs from 'fs';
 
 function updateMapping(user2publicKey: String, appKey: String){
+    let nextUUID=getNextUUID();
     let obj={
         "publicKey": user2publicKey,
-        "UUID": getNextUUID(),
+        "UUID": nextUUID,
         "appPublicKey": appKey
     }
 
@@ -11,7 +12,8 @@ function updateMapping(user2publicKey: String, appKey: String){
     const jsonString = fs.readFileSync('./src/Mapping.json', 'utf-8');
     const jsonData=JSON.parse(jsonString);
     // to be continued
-    jsonData["entries"].push(obj);
+    jsonData[nextUUID]=obj;
+    jsonData["length"]=nextUUID+1;
     const data=JSON.stringify(jsonData)
     // console.log(data)
     fs.writeFileSync("./src/Mapping.json", data, {
@@ -25,9 +27,14 @@ function getNextUUID(){
     const jsonString = fs.readFileSync('./src/Mapping.json', 'utf-8');
     const jsonData=JSON.parse(jsonString);
     // to be continued
-    return jsonData["entries"].length;
+    return jsonData["length"];
 }
-
+function getCredFromMapping(uuid: any){
+    const jsonString = fs.readFileSync('./src/Mapping.json', 'utf-8');
+    const jsonData=JSON.parse(jsonString);
+    let data=jsonData[uuid];
+    return data;
+}
 // console.log(getNextUUID());
-export {getNextUUID};
+export {getNextUUID, getCredFromMapping};
 export default updateMapping;
