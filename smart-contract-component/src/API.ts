@@ -12,10 +12,10 @@ const PORT = process.env.PORT || 3000;
 //     res.json({ status: true, message: "Our node.js app works" })
 // });
 
-app.post('/authenticationMethods', (req, res) => {
+app.post('/authenticationMethods', async (req, res) => {
     let data = req.body;
-    res.send(JSON.stringify(data));
-    register(data);
+    // res.send(JSON.stringify(data));
+    res.send(await register(data));
 })
 
 app.listen(PORT, () => console.log(`App listening at port ${PORT}`));
