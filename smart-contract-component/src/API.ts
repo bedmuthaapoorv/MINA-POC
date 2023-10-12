@@ -17,11 +17,11 @@ app.post('/authenticationMethods', async (req, res) => {
     let data = req.body;
     // res.send(JSON.stringify(data));
     console.log(data["method"])
-     if(data["method"]==="0"){
+     if(data["method"]===0){
          console.log("registration begins at verifier");
          res.send(await register(data));
      }
-     if(data["method"]==="1"){
+     if(data["method"]===1){
          console.log("authentication begins");
          res.send(await authenticate(data));
      }

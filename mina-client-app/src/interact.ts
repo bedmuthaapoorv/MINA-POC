@@ -1,9 +1,9 @@
-import { PrivateKey, PublicKey } from "snarkyjs";
+import { PrivateKey, PublicKey } from "o1js";
 import sendCreds from "./sendCredentials.js";
 import { storeCert, isRegistered } from "./sendCredentials.js";
-import { Mina, fetchAccount } from "snarkyjs";
+import { Mina, fetchAccount } from "o1js";
 import {Add} from "./Add.js";
-import { Field } from "snarkyjs";
+import { Field } from "o1js";
 import * as fs from "fs"
 
 const network=Mina.Network("https://proxy.berkeley.minaexplorer.com/graphql");
@@ -11,7 +11,7 @@ Mina.setActiveInstance(network);
 
 if(!isRegistered()){
   // generate details and send them to LRA
-
+  console.log("registering");
   // <-- how to generate different public keys for different users -->
   const userPrivateKey=PrivateKey.fromBase58("EKEPq8s8smnFkAhtoXETkDdb3m4jhugqzx82eYo5RNcJ3fiLryPF");
   const userPublicKey=PublicKey.fromPrivateKey(userPrivateKey);
@@ -31,6 +31,7 @@ if(!isRegistered()){
     "zkAppPublicKey": zkAppPublicKey.toBase58()
   }
   // send details to LRA for registration
+  console.log("sent details to verifier");
   let cert= await sendCreds(data);
   if(cert!=null){
     console.log("registration successful");
@@ -44,10 +45,11 @@ if(!isRegistered()){
     // console.log(resp.toString());
 
     // compiles the smart contract code into a form that can be run on Mina runtime
-    console.log("compiling...");
+    console.log("compiling the certificate");
     await Add.compile();
 
     let certObj=JSON.parse(cert);
+    console.log("building a storage request for blockchain")
     const tx= await Mina.transaction({sender: userPublicKey, fee: 0.1e9},()=>{
       zkApp.update(Field(certObj["UUID"]), Field(certObj["token"]));
     });
@@ -59,10 +61,11 @@ if(!isRegistered()){
     // // the smart contract code is run locally before proving. 
     // // This is because the prover needs to know the output of the computation in order to generate the proof.
 
-    console.log("proving...");
+    console.log("verifying the storage request for blockchain");
     await tx.prove();
 
     // every transaction needs to be signed by private keys else it will fail the verification stage
+    console.log("storing the certificate on blockchain");
     const sentTx=await tx.sign([userPrivateKey, zkAppPrivateKey]).send();
 
     console.log("https://berkeley.minaexplorer.com/transaction/"+sentTx.hash());
@@ -79,7 +82,7 @@ if(!isRegistered()){
   const cert=JSON.parse(jsonString);
   let data={
     "cert": cert,
-    "method":"1",
+    "method":1,
   }
   // send cert to LRA
   let authenticationResponse=await sendCreds(data);
