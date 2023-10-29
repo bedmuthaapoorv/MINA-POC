@@ -4,7 +4,7 @@
     "testnet1": {
       "url": "https://proxy.berkeley.minaexplorer.com/graphql",
       "keyPath": "keys/testnet1.json",
-      "feepayerKeyPath": "C:\\Users\\ADMIN/.cache/zkapp-cli/keys/apoorv.json",
+      "feepayerKeyPath": "keys/apoorv.json",
       "feepayerAlias": "apoorv",
       "fee": "0.1",
       "smartContract": "Add"

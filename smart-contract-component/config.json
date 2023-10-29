@@ -4,7 +4,7 @@
     "testnet": {
       "url": "https://proxy.berkeley.minaexplorer.com/graphql",
       "keyPath": "keys/testnet.json",
-      "feepayerKeyPath": "C:\\Users\\ADMIN\\.cache\\zkapp-cli\\keys\\apoorv.json",
+      "feepayerKeyPath": "keys/apoorv.json",
       "feepayerAlias": "apoorv",
       "fee": "0.1",
       "smartContract": "Add"
@@ -12,7 +12,7 @@
     "testnet2": {
       "url": "https://proxy.berkeley.minaexplorer.com/graphql",
       "keyPath": "keys/testnet2.json",
-      "feepayerKeyPath": "C:\\Users\\ADMIN/.cache/zkapp-cli/keys/apoorv.json",
+      "feepayerKeyPath": "keys/apoorv.json",
       "feepayerAlias": "apoorv",
       "fee": "0.1",
       "smartContract": "Add"
@@ -20,7 +20,7 @@
     "testnet3": {
       "url": "https://proxy.berkeley.minaexplorer.com/graphql",
       "keyPath": "keys/testnet3.json",
-      "feepayerKeyPath": "C:\\Users\\ADMIN/.cache/zkapp-cli/keys/apoorv.json",
+      "feepayerKeyPath": "keys/apoorv.json",
       "feepayerAlias": "apoorv",
       "fee": "0.1",
       "smartContract": "Add"
@@ -28,7 +28,7 @@
     "testnet4": {
       "url": "https://proxy.berkeley.minaexplorer.com/graphql",
       "keyPath": "keys/testnet4.json",
-      "feepayerKeyPath": "C:\\Users\\ADMIN/.cache/zkapp-cli/keys/apoorv.json",
+      "feepayerKeyPath": "keys/apoorv.json",
       "feepayerAlias": "apoorv",
       "fee": "0.1",
       "smartContract": "Add"
@@ -36,7 +36,7 @@
     "testnet5": {
       "url": "https://proxy.berkeley.minaexplorer.com/graphql",
       "keyPath": "keys/testnet5.json",
-      "feepayerKeyPath": "C:\\Users\\ADMIN/.cache/zkapp-cli/keys/apoorv.json",
+      "feepayerKeyPath": "keys/apoorv.json",
       "feepayerAlias": "apoorv",
       "fee": "0.1",
       "smartContract": "Add"
