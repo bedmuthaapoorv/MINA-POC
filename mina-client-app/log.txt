@@ -1,0 +1,4 @@
+local certificate exists
+authenticating begins
+sending self signed certificate to verifier
+authentication successfull
