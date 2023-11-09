@@ -1,4 +1,4 @@
-import { PrivateKey } from "snarkyjs";
+import { PrivateKey } from "o1js";
 
 // const privateKey=PrivateKey.random();
 // const publicKey=privateKey.toPublicKey();

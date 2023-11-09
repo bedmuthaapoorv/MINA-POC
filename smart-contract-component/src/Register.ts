@@ -1,6 +1,6 @@
 import generateRandomNumber from "./generate.js";
 import updateMapping, { getNextUUID, getCredFromMapping } from "./updateMapping.js";
-import { Mina, PublicKey, fetchAccount } from "snarkyjs";
+import { Mina, PublicKey, fetchAccount } from "o1js";
 import { Add } from "./Add.js";
 
 async function register(data: Object){
