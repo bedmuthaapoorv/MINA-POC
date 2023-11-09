@@ -2,7 +2,9 @@ import * as fs from 'fs';
 
 async function sendCreds(data: Object){
     let response=null;
-    await fetch('http://localhost:3000/authenticationMethods',{
+    // localhost link: http://localhost:3000/authenticationMethods
+    // public URL: http://mina-poc-backend.onrender.com/authenticationMethods
+    await fetch('http://mina-poc-backend.onrender.com/authenticationMethods',{
     method:"POST",
     body: JSON.stringify(
         data
