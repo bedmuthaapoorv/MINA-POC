@@ -9,9 +9,9 @@ app.use(bodyParser.urlencoded({ extended: false }))
 
 const PORT = process.env.PORT || 3000;
 
-// app.get('/', async (req, res) => {
-//     res.json({ status: true, message: "Our node.js app works" })
-// });
+app.get('/', async (req, res) => {
+    res.json({ status: true, message: "Our node.js app works" })
+});
 
 const outputLog = fs.createWriteStream('./log.txt');
 const consoler = new console.Console(outputLog);
