@@ -31,6 +31,9 @@ async function authenticate(data: Object) {
     // extract the UUID from cert
     let uuid=dataJSON["cert"]["UUID"];
     let mappingData=getCredFromMapping(uuid);
+    if(!mappingData){
+        return false;
+    }
     let zkAppPublicKey=mappingData["appPublicKey"];
 
     console.log("fetching details from blockchain...");

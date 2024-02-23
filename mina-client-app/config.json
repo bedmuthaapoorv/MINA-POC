@@ -2,9 +2,44 @@
   "version": 1,
   "deployAliases": {
     "testnet1": {
+      "url": "https://api.minascan.io/node/berkeley/v1/graphql",
+      "keyPath": "./keys/testnet6.json",
+      "feepayerKeyPath": "./keys/apoorv.json",
+      "feepayerAlias": "apoorv",
+      "fee": "0.1",
+      "smartContract": "Add"
+    },
+    "user1": {
+      "networkId": "testnet",
+      "url": "https://api.minascan.io/node/berkeley/v1/graphql",
+      "keyPath": "keys/user1.json",
+      "feepayerKeyPath": "C:\\Users\\ADMIN/.cache/zkapp-cli/keys/apoorv.json",
+      "feepayerAlias": "apoorv",
+      "fee": "0.1"
+    },
+    "testnet8": {
+      "networkId": "testnet",
+      "url": "https://api.minascan.io/node/berkeley/v1/graphql",
+      "keyPath": "keys/testnet8.json",
+      "feepayerKeyPath": "C:\\Users\\ADMIN/.cache/zkapp-cli/keys/apoorv.json",
+      "feepayerAlias": "apoorv",
+      "fee": "0.1",
+      "smartContract": "Add"
+    },
+    "testnet9": {
+      "networkId": "testnet",
+      "url": "https://api.minascan.io/node/berkeley/v1/graphql",
+      "keyPath": "keys/testnet9.json",
+      "feepayerKeyPath": "C:\\Users\\ADMIN/.cache/zkapp-cli/keys/apoorv.json",
+      "feepayerAlias": "apoorv",
+      "fee": "0.1",
+      "smartContract": "Add"
+    },
+    "testnet10": {
+      "networkId": "testnet",
       "url": "https://proxy.berkeley.minaexplorer.com/graphql",
-      "keyPath": "keys/testnet1.json",
-      "feepayerKeyPath": "keys/apoorv.json",
+      "keyPath": "keys/testnet10.json",
+      "feepayerKeyPath": "C:\\Users\\ADMIN/.cache/zkapp-cli/keys/apoorv.json",
       "feepayerAlias": "apoorv",
       "fee": "0.1",
       "smartContract": "Add"

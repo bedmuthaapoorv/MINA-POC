@@ -1,4 +1,4 @@
-import { Field, SmartContract, state, State, method} from 'o1js';
+import { Field, SmartContract, state, State, method, Permissions} from 'o1js';
 // import { Struct } from 'snarkyjs';
 
 /**
@@ -21,6 +21,9 @@ export class Add extends SmartContract {
   // this is the constructor where the fields are initialized
   init() {
     super.init();
+    // this.account.permissions.set({
+    //   ...Permissions.default()
+    // })
     this.UUID.set(Field(0));
     this.hashToken.set(Field(0));
   }

@@ -1,4 +1,7 @@
-local certificate exists
-authenticating begins
-sending self signed certificate to verifier
-authentication successfull
+registering
+sent details to verifier
+compiling the certificate
+building a storage request for blockchain
+verifying the storage request for blockchain
+storing the certificate on blockchain
+https://berkeley.minaexplorer.com/transaction/5JuSyDA32ZR8sRcsxiqHGrMPKZKGTKRHXJCp8gca42TGGNhgBMu9

@@ -1,4 +1,4 @@
-import { Field, SmartContract, state, State, method} from 'o1js';
+import { Field, SmartContract, state, State, method, Permissions} from 'o1js';
 // import { Struct } from 'snarkyjs';
 
 /**

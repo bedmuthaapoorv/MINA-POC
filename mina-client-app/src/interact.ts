@@ -8,17 +8,18 @@ import * as fs from "fs"
 
 const network=Mina.Network("https://proxy.berkeley.minaexplorer.com/graphql");
 Mina.setActiveInstance(network);
-const outputLog = fs.createWriteStream('./log.txt');
-const consoler = new console.Console(outputLog);
+//const outputLog = fs.createWriteStream('./log.txt');
+//const consoler = new console.Console(outputLog);
 if(!isRegistered()){
+  console.time('registration');
   // generate details and send them to LRA
-  //console.log("registering");
-  consoler.log("registering");
+  console.log("registering");
+  //consoler.log("registering");
   // <-- how to generate different public keys for different users -->
-  const userPrivateKey=PrivateKey.fromBase58("EKEPq8s8smnFkAhtoXETkDdb3m4jhugqzx82eYo5RNcJ3fiLryPF");
+  const userPrivateKey=PrivateKey.fromBase58("EKEf3ggiq1z7e4vPhYguR4twEnV9HQTZHKynbUTW9RAHCc2jUY9Y");
   const userPublicKey=PublicKey.fromPrivateKey(userPrivateKey);
-  const zkAppPrivateKey=PrivateKey.fromBase58("EKES1CPccEhxTr1JFkT3VXSSvvmbJC7Tsm18ZYEdYZeVgSY3xCfA");
-  const zkAppPublicKey=PublicKey.fromBase58("B62qkHM2YKkgtLb6T66rTaxSFHvZ4ynKEtS29sTKCdBzPnPuGRaNPHJ");
+  const zkAppPrivateKey=PrivateKey.fromBase58("EKFFyeM2JN8zmc7gwB3YwbEDLpznUarUszMnfHfvsYpcmAbkg9KT");
+  const zkAppPublicKey=PublicKey.fromBase58("B62qqatwGPDMAMKMUAvVW2H6mzNcYM9pJRV1jsz8WvhKD4MxCXjEqe1");
   // private and public keys of LRA / apoorv
   const lraPrivateKey=PrivateKey.fromBase58("EKF9GgrYH6qpxspwAE9vbq2RriMDHS4c3jvGqoitd6r9ko24Cx8M")
   const lraPublicKey=PublicKey.fromBase58("B62qj2gEtKpRJuf8H1vSes1cAK4ZTWm9ZzPtCryXTrhsrqYDdb6idbK")
@@ -33,8 +34,8 @@ if(!isRegistered()){
     "zkAppPublicKey": zkAppPublicKey.toBase58()
   }
   // send details to LRA for registration
-  //console.log("sent details to verifier");
-  consoler.log("sent details to verifier");
+  console.log("sent details to verifier");
+  //consoler.log("sent details to verifier");
   
   let cert= await sendCreds(data);
   if(cert!=null){
@@ -50,13 +51,13 @@ if(!isRegistered()){
     // console.log(resp.toString());
 
     // compiles the smart contract code into a form that can be run on Mina runtime
-    //console.log("compiling the certificate");
-    consoler.log("compiling the certificate");
+    console.log("compiling the certificate");
+    //consoler.log("compiling the certificate");
     await Add.compile();
 
     let certObj=JSON.parse(cert);
-    // console.log("building a storage request for blockchain")
-    consoler.log("building a storage request for blockchain")
+    console.log("building a storage request for blockchain")
+    //consoler.log("building a storage request for blockchain")
     const tx= await Mina.transaction({sender: userPublicKey, fee: 0.1e9},()=>{
       zkApp.update(Field(certObj["UUID"]), Field(certObj["token"]));
     });
@@ -68,31 +69,33 @@ if(!isRegistered()){
     // // the smart contract code is run locally before proving. 
     // // This is because the prover needs to know the output of the computation in order to generate the proof.
 
-    //console.log("verifying the storage request for blockchain");
-    consoler.log("verifying the storage request for blockchain");
+    console.log("verifying the storage request for blockchain");
+    //consoler.log("verifying the storage request for blockchain");
     
     await tx.prove();
 
     // every transaction needs to be signed by private keys else it will fail the verification stage
     // console.log("storing the certificate on blockchain");
-    consoler.log("storing the certificate on blockchain");
+    //consoler.log("storing the certificate on blockchain");
     
     const sentTx=await tx.sign([userPrivateKey, zkAppPrivateKey]).send();
 
-    //console.log("https://berkeley.minaexplorer.com/transaction/"+sentTx.hash());
-    consoler.log("https://berkeley.minaexplorer.com/transaction/"+sentTx.hash());
+    console.log("https://berkeley.minaexplorer.com/transaction/"+sentTx.hash());
+    //consoler.log("https://berkeley.minaexplorer.com/transaction/"+sentTx.hash());
 
   }else{
-    //console.log("registration unsuccessful");
-    consoler.log("registration unsuccessful");
+    console.log("registration unsuccessful");
+    //consoler.log("registration unsuccessful");
   }
+  console.timeEnd('registration');
 }else{
-  //console.log("local certificate exists");
-  //console.log("authenticating begins");
-  //console.log("sending self signed certificate to verifier");
-  consoler.log("local certificate exists");
-  consoler.log("authenticating begins");
-  consoler.log("sending self signed certificate to verifier");
+  
+  console.log("local certificate exists");
+  console.log("authenticating begins");
+  console.log("sending self signed certificate to verifier");
+  //consoler.log("local certificate exists");
+  //consoler.log("authenticating begins");
+  //consoler.log("sending self signed certificate to verifier");
   
   // <-- sign the certificate -->
   const jsonString = fs.readFileSync('./src/Certificate.json', 'utf-8');
@@ -102,14 +105,15 @@ if(!isRegistered()){
     "method":1,
   }
   // send cert to LRA
+  //console.time('http request & response');
   let authenticationResponse=await sendCreds(data);
+  //console.timeEnd('http request & response');
   // console.log(authenticationResponse);
   if(authenticationResponse=="true"){
-    //console.log("authentication successfull");
-    consoler.log("authentication successfull");
+    console.log("authentication successfull");
+    //consoler.log("authentication successfull");
   }else{
     //console.log("authentication unsuccessfull");
     console.log("authentication unsuccessfull");
   }
-
 }
